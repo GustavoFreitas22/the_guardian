@@ -1,19 +1,21 @@
 package routes
 
 import (
-	"github.com/GustavoFreitas22/the_guardian/controller"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func HandleRoutes() {
 
 	server := gin.Default()
+	server.Use(cors.Default())
 
-	server.POST("/secret", controller.PostInfoData)
-	server.GET("/:id", controller.GetInfoDataById)
-	server.GET("/secrets/:context", controller.GetDataByContext)
-	server.PUT("/secret", controller.EditInfoData)
-	server.DELETE(("/secret/:id"), controller.DeleteInfoData)
+	api := server.Group("/api")
+	{
+		api.GET("/hello", func(ctx *gin.Context) {
+			ctx.JSON(200, "Salve salve")
+		})
+	}
 
 	server.Run(":5000")
 
